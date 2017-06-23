@@ -26,7 +26,7 @@
 			request.send(new FormData(this));
 		});
 
-		navigator.credentials.get({}).then(function (goo, b, c) {
+		navigator.credentials.get({ password: true }).then(function (goo, b, c) {
 			log(goo);
 		}, function (bar, b, c) {
 			log(goo);
