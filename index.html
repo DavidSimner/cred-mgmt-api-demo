@@ -29,7 +29,9 @@
 		navigator.credentials.get({ password: true }).then(function (cred) {
 			if (cred)
 			{
-				var response = await fetch('https://cred-mgmt-api-demo.azurewebsites.net/api/sessions', {});
+				fetch('https://cred-mgmt-api-demo.azurewebsites.net/api/sessions', {}).then(function (response) {
+
+				});
 			}
 		});
 	</script>
