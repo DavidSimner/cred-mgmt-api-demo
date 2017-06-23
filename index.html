@@ -26,10 +26,11 @@
 			request.send(new FormData(this));
 		});
 
-		navigator.credentials.get({ password: true }).then(function (goo, b, c) {
-			log(goo);
-		}, function (bar, b, c) {
-			log(goo);
+		navigator.credentials.get({ password: true }).then(function (cred) {
+			if (cred)
+			{
+				var response = await fetch('https://cred-mgmt-api-demo.azurewebsites.net/api/sessions', {});
+			}
 		});
 	</script>
 </body>
