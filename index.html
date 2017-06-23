@@ -16,7 +16,7 @@
 		$('form').submit(function (e) {
 			e.preventDefault();
 
-			fetch('https://cred-mgmt-api-demo.azurewebsites.net/api/tokens', {
+			fetch('/api/tokens', {
 				method: 'POST',
 				body: new FormData(this)
 			}).then(function (response) {
