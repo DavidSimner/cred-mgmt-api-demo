@@ -16,20 +16,23 @@
 		$('form').submit(function (e) {
 			e.preventDefault();
 
-			var request = new XMLHttpRequest();
-			request.open('POST', 'https://cred-mgmt-api-demo.azurewebsites.net/api/tokens');
-			request.onload = function () {
-				var data = JSON.parse(request.responseText);
+			fetch('https://cred-mgmt-api-demo.azurewebsites.net/api/tokens', {
+				method: 'POST',
+				body: new FormData(this)
+			}).then(function (response) {
+				var data = JSON.parse(response);
 				var cred = new PasswordCredential(data);
 				navigator.credentials.store(cred);
-			};
-			request.send(new FormData(this));
+			});
 		});
 
 		navigator.credentials.get({ password: true }).then(function (cred) {
 			if (cred)
 			{
-				fetch('https://cred-mgmt-api-demo.azurewebsites.net/api/sessions', {}).then(function (response) {
+				fetch('https://cred-mgmt-api-demo.azurewebsites.net/api/sessions', {
+					method: 'POST',
+					credentials: cred
+				}).then(function (response) {
 
 				});
 			}
