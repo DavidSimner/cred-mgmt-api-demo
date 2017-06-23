@@ -18,6 +18,9 @@
 
 			var request = new XMLHttpRequest();
 			request.open('POST', 'https://cred-mgmt-api-demo.azurewebsites.net/api/tokens');
+			request.onload = function (a, b, c) {
+
+			};
 			request.send(new FormData(this));
 		});
 	</script>
