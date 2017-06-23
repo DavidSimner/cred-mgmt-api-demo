@@ -20,7 +20,8 @@
 				method: 'POST',
 				body: new FormData(this)
 			}).then(function (response) {
-				var data = JSON.parse(response);
+				return response.json();
+			}).then(function (data) {
 				var cred = new PasswordCredential(data);
 				navigator.credentials.store(cred);
 			});
@@ -33,9 +34,9 @@
 					method: 'POST',
 					credentials: cred
 				}).then(function (response) {
-
+					return response.json();
+				}).then(function (data) {
 				});
-			}
 		});
 	</script>
 </body>
