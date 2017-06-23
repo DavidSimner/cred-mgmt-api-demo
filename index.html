@@ -30,7 +30,7 @@
 		navigator.credentials.get({ password: true }).then(function (cred) {
 			if (cred)
 			{
-				fetch('https://cred-mgmt-api-demo.azurewebsites.net/api/sessions', {
+				fetch('/api/sessions', {
 					method: 'POST',
 					credentials: cred
 				}).then(function (response) {
