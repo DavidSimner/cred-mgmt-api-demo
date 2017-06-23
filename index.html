@@ -15,6 +15,10 @@
 	<script>
 		$('form').submit(function (e) {
 			e.preventDefault();
+
+			var request = new XMLHttpRequest();
+			request.open('POST', 'https://cred-mgmt-api-demo.azurewebsites.net/api/tokens');
+			request.send(new FormData(this));
 		});
 	</script>
 </body>
