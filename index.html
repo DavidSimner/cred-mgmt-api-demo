@@ -25,7 +25,8 @@
 			}).then(function (data) {
 				$('button').hide();
 				$('form').hide();
-				document.write(data);
+				document.write('<b>Logged in as</b>');
+				document.write(JSON.stringify(data));
 			});
 		}
 
