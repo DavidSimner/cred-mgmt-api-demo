@@ -6,6 +6,8 @@
 <body>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+	<button>Log in</button>
+
 	<form>
 		<input type="email"    name="email"    autocomplete="username" />
 		<input type="password" name="password" autocomplete="current-password" />
@@ -27,17 +29,24 @@
 			});
 		});
 
-		navigator.credentials.get({ password: true }).then(function (cred) {
-			if (cred)
-			{
-				fetch('/api/sessions', {
-					method: 'POST',
-					credentials: cred
-				}).then(function (response) {
-					return response.json();
-				}).then(function (data) {
-				});
-			}
+		$('form').hide();
+		$('button').click(function () {
+			navigator.credentials.get({ password: true }).then(function (cred) {
+				if (!cred)
+				{
+					$('form').show();
+				}
+				else
+				{
+					fetch('/api/sessions', {
+						method: 'POST',
+						credentials: cred
+					}).then(function (response) {
+						return response.json();
+					}).then(function (data) {
+					});
+				}
+			});
 		});
 	</script>
 </body>
