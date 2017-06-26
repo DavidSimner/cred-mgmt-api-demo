@@ -17,29 +17,36 @@ namespace LightningTalk
         [FunctionName("Sessions")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestMessage req, TraceWriter log)
         {
-            log.Info("C# HTTP trigger function processed a request.");
-
-            var data = await RequestDecoder.Decode<SessionCreatePostModel>(req);
-
             try
             {
-                var jwt = Jwt.Decode(data.password);
-                if (jwt.subject != data.username)
-                {
-                    throw new Exception("Username/JWT-subject mismatch");
-                }
-            }
-            catch
-            {
-                throw new HttpResponseException(req.CreateErrorResponse(HttpStatusCode.Forbidden, "Forbidden"));
-            }
+                log.Info("C# HTTP trigger function processed a request.");
 
-            var response = new SessionResponseModel
+                var data = await RequestDecoder.Decode<SessionCreatePostModel>(req);
+
+                try
                 {
-                    id = Guid.NewGuid().ToString("N"),
-                    username = data.username
-                };
-            return req.CreateResponse(HttpStatusCode.OK, response);
+                    var jwt = Jwt.Decode(data.password);
+                    if (jwt.subject != data.username)
+                    {
+                        throw new Exception("Username/JWT-subject mismatch");
+                    }
+                }
+                catch
+                {
+                    throw new HttpResponseException(req.CreateErrorResponse(HttpStatusCode.Forbidden, "Forbidden"));
+                }
+
+                var response = new SessionResponseModel
+                    {
+                        id = Guid.NewGuid().ToString("N"),
+                        username = data.username
+                    };
+                return req.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (HttpResponseException error)
+            {
+                return error.Response;
+            }
         }
     }
 }
