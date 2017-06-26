@@ -21,10 +21,17 @@ namespace LightningTalk
 
             var data = await RequestDecoder.Decode<SessionCreatePostModel>(req);
 
-            var jwt = Jwt.Decode(data.password);
-            if (jwt.subject != data.username)
+            try
             {
-                throw new HttpResponseException(req.CreateErrorResponse(HttpStatusCode.Forbidden, "Password not valid for that username"));
+                var jwt = Jwt.Decode(data.password);
+                if (jwt.subject != data.username)
+                {
+                    throw new Exception("Username/JWT-subject mismatch");
+                }
+            }
+            catch
+            {
+                throw new HttpResponseException(req.CreateErrorResponse(HttpStatusCode.Forbidden, "Forbidden"));
             }
 
             var response = new SessionResponseModel
