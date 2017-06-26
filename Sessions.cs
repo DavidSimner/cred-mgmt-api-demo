@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using LightningTalk.PostModels;
+using LightningTalk.ResponseModels;
 using LightningTalk.Utils;
 
 namespace LightningTalk
@@ -25,9 +27,10 @@ namespace LightningTalk
                 throw new HttpResponseException(req.CreateErrorResponse(HttpStatusCode.Forbidden, "Password not valid for that username"));
             }
 
-            var response = new
+            var response = new SessionResponseModel
                 {
-                    message = "Hello " + data.username
+                    id = Guid.NewGuid().ToString("N"),
+                    username = data.username
                 };
             return req.CreateResponse(HttpStatusCode.OK, response);
         }
