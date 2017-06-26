@@ -34,6 +34,7 @@
 			navigator.credentials.get({ password: true }).then(function (cred) {
 				if (!cred)
 				{
+					$('button').hide();
 					$('form').show();
 				}
 				else
